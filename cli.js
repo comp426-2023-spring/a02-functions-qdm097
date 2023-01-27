@@ -44,7 +44,7 @@ if(args.json) {
 	process.exit()
 }
 
-const days = args.d || 1
+const days = args.d ?? 1
 const need_galoshes = data.daily.precipitation_hours[days] > 0
 
 var phrase = ""
