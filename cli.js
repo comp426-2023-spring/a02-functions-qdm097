@@ -52,17 +52,11 @@ if(longitude > 90 || longitude < -90){
 	console.log('Longitude must be in range [-90 -> 90]')
 }
 
-const url = 'https://api.open-meteo.com/v1/forecast?latitude=' + args.latitude
-+ '&longitude=' + args.longitude + '&timezone=' + timezone + '&daily=precipitation_hours'
+const url = 'https://api.open-meteo.com/v1/forecast?latitude=' + latitude
++ '&longitude=' + longitude + '&timezone=' + timezone + '&daily=precipitation_hours'
 
 import fetch from 'node-fetch'
-var response = null
-try{
-	response = await fetch(url)
-}
-catch{
-	console.log(url)
-}
+const response = await fetch(url)
 const data = await response.json()
 
 if(args.json) {
