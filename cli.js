@@ -27,10 +27,30 @@ if(args.help) {
 import moment from 'moment-timezone'
 const timezone = args.t || args.z || moment.tz.guess()
 
-var latitude = args.n || -args.s
+if(args.n && args.s){
+	console.log('Cannot specify LATITUDE twice')
+	process.exit(1)
+}
+if(args.e && args.w){
+	console.log('Cannot specify LONGITUDE twice')
+	process.exit(1)
+}
+if(args.d > 6){
+	console.log('Day option -d must be 0-6')
+	process.exit(1)
+}
+
+var latitude = args.n ?? -args.s
 latitude = latitude.toFixed(2)
-var longitude = args.e || -args.w
+var longitude = args.e ?? -args.w
 longitude = longitude.toFixed(2)
+
+if(latitude > 90 || latitude < -90){
+	console.log('Latitude must be in range [-90, 90]')
+}
+if(longitude > 90 || longitude < -90){
+	console.log('Longitude must be in range [-90 -> 90]')
+}
 
 const url = 'https://api.open-meteo.com/v1/forecast?latitude=' + args.latitude
 + '&longitude=' + args.longitude + '&timezone=' + timezone + '&daily=precipitation_hours'
